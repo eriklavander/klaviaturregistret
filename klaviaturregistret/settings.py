@@ -8,6 +8,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+# Import environment-specific settings.
+from settings_local import *
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -17,14 +20,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#e^h9-=+w(703$0&-lvn^z4fn)8hv7!!r7r_)6iry+dk0v+^kl'
+# 2014-11-20 rollo: Moved to local_settings
+#SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 2014-11-20 rollo: Moved to local_settings
+#DEBUG = True
 
-TEMPLATE_DEBUG = True
+# 2014-11-20 rollo:
+#TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["klaviaturregistret.se", "www.klaviaturregistret.se"]
 
 
 # Application definition
@@ -58,8 +65,12 @@ WSGI_APPLICATION = 'klaviaturregistret.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 2014-11-20 rollo:
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'klaviaturregistret',
+        'USER': 'klaviaturregistret',
     }
 }
 

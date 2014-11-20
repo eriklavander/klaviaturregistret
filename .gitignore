@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Local settings.
+klaviaturregistret/settings_local.py
+

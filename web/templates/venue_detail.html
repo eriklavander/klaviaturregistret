@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block "title"%}{{ object.name }} - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.address }}</p>
+    <p>Publik: {{ object.audience_min }} - {{ object.audience_max }}
+  </div>
+</div>
+<div class="container bs-docs-container">
+  <div class="row">
+    <div class="col-md-9" role="gallery">
+      {% for image in object.images.all %}
+      <div class="col-md-2">
+        <a href="{{ image.image.url }}"><img src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" /></a>
+      </div>
+      {% empty %}
+      <p>Inga bilder än!</p>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9" role="main">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {% for description in object.descriptions.all %}
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="descriptionHeading">
+            <h4 class="panel-title">
+            {% if forloop.first %}
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+            {% else %}
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+            {% endif %}
+              {{ description.author }}, {{ description.timestamp }}
+            </a>
+          </h4>
+        </div>
+        {% if forloop.first %}
+        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="descriptionHeading">
+        {% else %}
+        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="descriptionHeading">
+        {% endif %}
+          <div class="panel-body">
+            {{ description.text }}
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">Beskrivning saknas.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div> 
+  <h2>Kontaktuppgifter</h2>
+  <div class="row">
+    {% for contact in object.contacts.all %}
+      <address>
+        <strong>{{ contact.name }}</strong><br/>
+        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>{{ contact.email|default_if_none:"-" }}<br/>
+        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>{{ contact.phone|default_if_none:"-" }}<br/>
+      </address>
+    {% empty %}
+      <p class="text-muted">Kontaktuppgifter saknas.</p>
+    {% endfor %}
+  </div>
+  {% endblock %}

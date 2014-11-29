@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block "title"%}{{ user.get_full_name }} - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h2>{{ user.get_full_name }}</h2>
+  </div>
+</div>
+<div class="container bs-docs-container">
+  <div class="row">
+    <h3>Beskrivningar</h3>
+    {% for description in user.description_set.all %}
+    <h4>{{ description.venue_set.get.name }}</h4>
+    <p>{{ description.text }}</p>
+    <footer class="text-muted">{{ description.timestamp }}</footer>
+    {% empty %}
+    <p class="text-muted">Inga beskrivningar</p>
+    {% endfor %}
+    <h3>Bilder</h3>
+    {% for image in user.image_set.all %}
+    <div class="col-md-2">
+      <a href="{{ image.image.url }}"><img src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" /></a>
+      {% if image.venue_set.get %}
+      <p><a href="{% url 'venue_detail' image.venue_set.get.id %}">{{ image.venue_set.get.name }}</a></p>
+      {% endif %}
+      <p class="text-muted">{{ image.timestamp }}</p>
+    </div>
+    {% empty %}
+    <p class="text-muted">Inga bilder</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

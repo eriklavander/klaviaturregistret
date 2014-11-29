@@ -1,0 +1,99 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html class="no-js" lang="">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block "title" %}{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'web/font/MyFontsWebfontsKit.css' %}">
+    {% bootstrap_css %}
+    <link href="{% static 'web/css/docs.css' %}" media="screen" rel="stylesheet">
+    <link href="{% static 'web/css/klaviaturregistret.css' %}" media="screen" rel="stylesheet">
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+    <!-- Navstrip -->
+    {% block "header" %}
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="navbar-brand">Klaviaturregistret</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="#">Lokaler</a>
+            </li>
+            <li class="active">
+              <a href="#">Om</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li class="navbar-text">
+              {{ user.get_full_name }} <a href="{% url "logout" %}">Logga ut</a>
+            </li>
+            {% else %}
+            <li class="navbar-text">
+              Logga in med
+            </li>
+            <li>
+              <a href="{% url "social:begin" "facebook" %}">Facebook</a>
+            </li>
+            <li>
+              <a href="{% url "social:begin" "google-oauth2" %}">Google</a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    {% endblock %}
+    {% block "content" %}
+    <div class="bs-docs-header" id="content">
+      <div class="container">
+        <h1>Innehåll goes here</h1>
+        <p>Mer innehåll här.</p>
+      </div>
+    </div>
+    <div class="container bs-docs-container">
+      <div class="row">
+        <div class="col-md-9" role="main">
+          <h1 id="error" class="page-header">Rubb rubb</h1>
+          <p class="lead">Den här texten ska aldrig dyka upp på sajten.</p>
+          <p>Se till att sidmallarna innehåller ett content-block.</p>
+        </div>
+      </div>
+    </div> 
+    {% endblock %}
+    <!-- Footer ================================================== -->
+    {% block "footer" %}
+    <footer class="bs-docs-footer" role="contentinfo">
+      <div class="container">
+        <img class="logo" src="{% static 'web/images/markovlaboratorierna.svg' %}" alt="Markovlaboratorierna" width="120px">
+        <p class="lead">Hopsnickrad i Markovlaboratorierna hösten 2014.</p>
+        <p class="text-muted">Källkoden för sajten, som är skriven i <a href="https://djangoproject.com">Django</a>, finns tillgänglig <a href="https://github.com/eriklavander/klaviaturregistret">här</a>.</p>
+        <p class="text-muted">Sajtens utseende baseras på <a href="https://getbootstrap.com/">Bootstrap</a>, typsnittet <a href="http://fonts.kylewaynebenson.com/tide-sans/">Tide Sans</a>, diverse fotomaterial från olika källor på <a href="https://flickr.com">Flickr</a> och, naturligtvis, bilder och text från sajtens användare.
+      </div>
+    </footer>
+    {% endblock %}
+    {% block "javascript" %}
+      <script src="{% bootstrap_jquery_url %}"></script>
+      {% bootstrap_javascript %}
+    {% endblock %}
+    {% endblock %}
+  </body>
+</html>

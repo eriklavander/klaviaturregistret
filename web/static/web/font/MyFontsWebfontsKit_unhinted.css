@@ -1,0 +1,46 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 2927646, 2014-11-23T17:05:03-0500
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: TideSans-500Dudette by Kyle Wayne Benson
+ * URL: http://www.myfonts.com/fonts/kyle-wayne-benson/tide-sans/dudette/
+ * 
+ * Webfont: TideSans-500DudetteItalic by Kyle Wayne Benson
+ * URL: http://www.myfonts.com/fonts/kyle-wayne-benson/tide-sans/dudette-italic/
+ * 
+ * Webfont: TideSans-900Dude by Kyle Wayne Benson
+ * URL: http://www.myfonts.com/fonts/kyle-wayne-benson/tide-sans/dude/
+ * 
+ * Webfont: TideSans-900DudeItalic by Kyle Wayne Benson
+ * URL: http://www.myfonts.com/fonts/kyle-wayne-benson/tide-sans/dude-italic/
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=2927646
+ * Licensed pageviews: 10,000
+ * Webfonts copyright: &#x00A9; 2013 Kyle Wayne Benson
+ * 
+ * © 2014 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/2cac1e");
+
+  
+@font-face {font-family: 'TideSans-500Dudette';src:url('webfonts/2CAC1E_0_unhinted_0.woff2') format('woff2'),url('webfonts/2CAC1E_0_unhinted_0.woff') format('woff'),url('webfonts/2CAC1E_0_unhinted_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TideSans-500DudetteItalic';src:url('webfonts/2CAC1E_1_unhinted_0.woff2') format('woff2'),url('webfonts/2CAC1E_1_unhinted_0.woff') format('woff'),url('webfonts/2CAC1E_1_unhinted_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TideSans-900Dude';src:url('webfonts/2CAC1E_2_unhinted_0.woff2') format('woff2'),url('webfonts/2CAC1E_2_unhinted_0.woff') format('woff'),url('webfonts/2CAC1E_2_unhinted_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TideSans-900DudeItalic';src:url('webfonts/2CAC1E_3_unhinted_0.woff2') format('woff2'),url('webfonts/2CAC1E_3_unhinted_0.woff') format('woff'),url('webfonts/2CAC1E_3_unhinted_0.ttf') format('truetype');}
+ 

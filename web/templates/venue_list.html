@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block "title"%}{{ Lokaler }} - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1>Lokaler</h1>
+  </div>
+</div>
+<div class="container bs-docs-container">
+  {% for venue in object_list %}
+  <div class="row">
+    <h2><a href="{% url 'venue_detail' venue.id %}">{{ venue.name }}</a></h2>
+    <div>
+      {% for description in venue.descriptions.all %}
+      <p>{{ description.text }}</p>
+      <footer class="text-muted">{{ description.timestamp }}</footer>
+      {% empty %}
+      <p class="text-muted">Inga beskrivningar</p>
+      {% endfor %}
+    </div>
+    <h3>Bilder</h3>
+    {% for image in venue.images.all %}
+    <!-- Thumbnail -->
+    <div class="col-lg-3 col-md-4 col-xs-6">
+      <a class="thumbnail" href="#" data-toggle="modal" data-target="#popup-{{ image.id }}">
+        <img class="img-responsive" src="{{ image.thumbnail.url }}" alt="{{ image.caption }}">
+        {% blocktrans %}
+        <small>{{ image.caption }} - {{ image.timestamp|timesince }}</small>
+        {% endblocktrans %}
+      </a>
+    </div>
+    <!-- Modal fullsize view -->
+    <div class="modal fade" id="popup-{{ image.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="popup-{{ image.id }}">{{ image.caption }}</h4>
+          </div>
+          <div class="modal-body">
+          <img src="{{ image.image.url }}" class="img-responsive img-rounded center-block" alt="{{ image.caption }}">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">Inga bilder</p>
+    {% endfor %}
+  </div>
+  {% empty %}
+  <p class="text-muted">Inga lokaler än!</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+/* klaviaturregistret.css */
+h1 {
+    font-family: TideSans-500Dudette;
+    text-transform: uppercase;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: TideSans-500Dudette;
+    text-transform: uppercase;
+}
+
+.bs-docs-footer .logo {
+	opacity: 0.5;
+}
+
+.landing-bg {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 400px;
+  color: #eeeeee;
+  background-color: #444444;
+  background: url(/static/web/images/landing-bg.jpg) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.landing-form {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}

@@ -10,7 +10,7 @@
   <div class="row">
     <h3>Beskrivningar</h3>
     {% for description in user.description_set.all %}
-    <h4>{{ description.venue_set.get.name }}</h4>
+    <h4><a href="{% url 'venue_detail' pk=description.venue_set.get.pk %}">{{ description.venue_set.get.name }}</a></h4>
     <p>{{ description.text }}</p>
     <footer class="text-muted">{{ description.timestamp }}</footer>
     {% empty %}

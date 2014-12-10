@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.urlresolvers import reverse
 
 from PIL import Image as PILImage
 import os
@@ -78,8 +79,8 @@ class Venue(models.Model):
     # def latest_update(self):
     #     latest = self.descriptions.order_by('-timestamp')
 
-
-        
+    def get_absolute_url(self):
+        return reverse('venue_detail', kwargs={'pk': self.pk})
 
     def __unicode__(self):
         return self.name

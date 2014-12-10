@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 {% block "title"%}{{ object.name }} - Klaviaturregistret{% endblock %}
 {% block "content" %}
 <div class="bs-docs-header" id="content">
@@ -6,61 +7,154 @@
     <h1>{{ object.name }}</h1>
     <p>{{ object.address }}</p>
     <p>Publik: {{ object.audience_min }} - {{ object.audience_max }}
+    <form action="{% url 'delete_venue' pk=object.pk %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">
+        {% bootstrap_icon "trash" %} Radera lokal
+      </button>
+    </form>
   </div>
 </div>
+
 <div class="container bs-docs-container">
   <div class="row">
-    <div class="col-md-9" role="gallery">
-      {% for image in object.images.all %}
-      <div class="col-md-2">
-        <a href="{{ image.image.url }}"><img src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" /></a>
+    {% for image in object.images.all %}
+    <div class="col-md-1 col-xs-3">
+      <a href="{{ image.image.url }}">
+        <img src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" />
+        <div class="caption">
+          <p class="text-muted small">{{ image.caption }}</p>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <p>Inga bilder än!</p>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a data-toggle="collapse" data-target="#image-form" aria-expanded="true" aria-controls="demo">
+        Lägg till bild<span class="caret"></span>
+      </a>
+      <div id="image-form" class="collapse">
+        <form action="" method="post">
+          {% csrf_token %}
+          {% bootstrap_form image_form %}
+          {% buttons %}
+          <button type="submit" class="btn btn-primary">
+              {% bootstrap_icon "picture" %} Lägg till bild
+          </button>
+          {% endbuttons %}
+        </form>
       </div>
-      {% empty %}
-      <p>Inga bilder än!</p>
-      {% endfor %}
     </div>
   </div>
   <div class="row">
-    <div class="col-md-9" role="main">
-      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        {% for description in object.descriptions.all %}
-        <div class="panel panel-default">
-          <div class="panel-heading" role="tab" id="descriptionHeading">
-            <h4 class="panel-title">
-            {% if forloop.first %}
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-            {% else %}
-            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
-            {% endif %}
-              {{ description.author }}, {{ description.timestamp }}
-            </a>
-          </h4>
+    <div class="col-md-6">
+      <h2>Beskrivning</h2>
+      {% if object.descriptions.all.0 %}
+      <p>{{ object.descriptions.all.0.text }}</p>
+      <p class="text-muted">&mdash; {{ object.descriptions.all.0.author }}, {{ object.descriptions.all.0.timestamp }}</p>
+      {% else %}
+      <p class="text-muted">Inga beskrivningar än.</p>
+      {% endif %}
+
+      {% if object.descriptions.all.1 %}
+      <div>
+        <a class="" data-toggle="collapse" data-target="#old_descriptions" aria-expanded="true" aria-controls="demo">
+          Visa äldre beskrivningar<span class="caret"></span>
+        </a>
+        <div id="old_descriptions" class="collapse">
+          {% for description in object.descriptions.all|slice:"1:" %}
+          <p>{{ description.text }}</p>
+          <p class="text-muted">&mdash; {{ description.author }}, {{ description.timestamp }}</p>
+          {% endfor %}
         </div>
-        {% if forloop.first %}
-        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="descriptionHeading">
-        {% else %}
-        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="descriptionHeading">
-        {% endif %}
-          <div class="panel-body">
-            {{ description.text }}
-          </div>
+      </div>
+      {% endif %}
+      <div>
+        <a class="" data-toggle="collapse" data-target="#description-form" aria-expanded="true" aria-controls="demo">
+          Redigera beskrivning<span class="caret"></span>
+        </a>
+        <div id="description-form" class="collapse">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form description_form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Redigera beskrivning
+            </button>
+            {% endbuttons %}
+          </form>
         </div>
-        {% empty %}
-        <p class="text-muted">Beskrivning saknas.</p>
-        {% endfor %}
       </div>
     </div>
-  </div> 
-  <h2>Kontaktuppgifter</h2>
-  <div class="row">
-    {% for contact in object.contacts.all %}
-      <address>
+
+    <div class="col-md-4 pull-right" role="map">
+      <h2>Karta</h2>
+      <iframe width="400" height="400" frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBq7cIi8M4OreHflOzG328po6aiTCNtv2A
+          &q={{ object.address }}">
+      </iframe>
+    </div>
+
+    <div class="col-md-6"> 
+      <h2>Kontaktuppgifter</h2>
+      {% for contact in object.contacts.all %}
+      <p>
         <strong>{{ contact.name }}</strong><br/>
         <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>{{ contact.email|default_if_none:"-" }}<br/>
         <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>{{ contact.phone|default_if_none:"-" }}<br/>
-      </address>
-    {% empty %}
+      </p>
+      {% empty %}
       <p class="text-muted">Kontaktuppgifter saknas.</p>
-    {% endfor %}
+      {% endfor %}
+      <div>
+        <a class="" data-toggle="collapse" data-target="#contact-form" aria-expanded="true" aria-controls="demo">
+          Lägg till kontaktuppgift<span class="caret"></span>
+        </a>
+        <div id="contact-form" class="collapse">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form contact_form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Lägg till kontaktuppgift
+            </button>
+            {% endbuttons %}
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Utrustning</h2>
+      {% for equipment in object.equipment.all %}
+      <h3>{{ equipment.name }}</h3>
+      <p>{{ equipment.desc }}</p>
+      <p class="text-muted">&mdash; {{ equipment.author }}, {{ equipment.timestamp }}</p>
+      {% empty %}
+      <p class="text-muted">Inga inventarier än.</p>
+      {% endfor %}
+      <div>
+        <a class="" data-toggle="collapse" data-target="#equipment-form" aria-expanded="true" aria-controls="demo">
+          Lägg till utrustning<span class="caret"></span>
+        </a>
+        <div id="equipment-form" class="collapse">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form equipment_form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Lägg till utrustning
+            </button>
+            {% endbuttons %}
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+
+    </div>
   </div>
-  {% endblock %}
+</div>
+{% endblock %}

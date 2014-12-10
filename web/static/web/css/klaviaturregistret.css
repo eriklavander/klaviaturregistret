@@ -1,16 +1,21 @@
 /* klaviaturregistret.css */
 h1 {
-    font-family: TideSans-500Dudette;
-    text-transform: uppercase;
+  font-family: TideSans-500Dudette;
+  text-transform: uppercase;
 }
 
 h2, h3, h4, h5, h6 {
-    font-family: TideSans-500Dudette;
-    text-transform: uppercase;
+  font-family: TideSans-500Dudette;
+  text-transform: uppercase;
 }
 
 .bs-docs-footer .logo {
 	opacity: 0.5;
+}
+
+.bs-docs-header h1 {
+  font-size:32px;
+  line-height:1
 }
 
 .landing-bg {

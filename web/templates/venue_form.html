@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block "title"%}{{ object.name }} - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1>Skapa ny lokal</h1>
+  </div>
+</div>
+
+<div class="container bs-docs-container">
+  <div class="row">
+    <form action="" method="post">{% csrf_token %}
+      {{ form.as_table }}
+      <input type="submit" value="Create" />
+    </form>
+  </div>
+</div>
+{% endblock %}

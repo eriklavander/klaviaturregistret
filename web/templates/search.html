@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block "title"%}Sök - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1>Sök</h1>
+  </div>
+</div>
+
+<div class="container bs-docs-container">
+  <div class="row">
+    {% for venue in hits %}
+    <div class="media row">
+      <a class="media-left" href="{% url 'venue_detail' venue.id %}">
+        <img src="{{ venue.images.all.0.thumbnail.url }}" alt="{{ venue.images.all.0.images.caption }}">
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading"><a href="{% url 'venue_detail' venue.id %}">{{ venue.name }}</a></h4>
+        <div class="col-md-6">
+          <p class="small">{{ venue.descriptions.all.0.text | truncatewords:40 }}</p>
+          <p class="text-muted small">&mdash; {{ venue.descriptions.all.0.author }}, {{ venue.descriptions.all.0.timestamp }}</p>
+        </div>
+        <p class="small">Adress: {{ venue.address }}</p>
+        <p class="small">Publik: {{ venue.audience_min }} &mdash; {{ venue.audience_max }}</p>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">Inga träffar!</p>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <form action="{% url 'advanced_search' %}" method="get">
+      {% csrf_token %}
+      {{ searchform.as_p }}
+      <input type="submit" value="Sök" />
+    </form>
+  </div>
+</div>
+{% endblock %}

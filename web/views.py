@@ -146,8 +146,8 @@ class CreateImage(FormView):
       added_by = self.request.user,
       venue = self.venue,
     )
-    self.new_image.make_thumbnail()
     self.new_image.save()
+    self.new_image.make_thumbnail()
 
     return super(CreateImage, self).form_valid(form)
 

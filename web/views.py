@@ -141,7 +141,7 @@ class CreateImage(FormView):
     sys.stderr.write('In form_valid\n{}\n'.format((self.request)))
     self.venue = Venue.objects.get(pk=self.kwargs['pk'])
     self.new_image = Image(
-      image = form.cleaned.data['image'],
+      image = form.cleaned_data['image'],
       caption = form.cleaned_data['caption'],
       added_by = self.request.user,
       venue = self.venue,

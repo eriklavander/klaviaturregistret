@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web.models import Venue, Contact, Image, Description, Equipment
+from web.models import Venue, Address, Contact, Image, Description
 
 # from django.contrib import admin
 # from myapp.models import Article
@@ -24,9 +24,15 @@ class ImageAdmin(admin.ModelAdmin):
 	make_thumbnails.short_description = 'Create thumbnails for selected images'
 	actions = ['make_thumbnails']
 
+class AddressInline(admin.StackedInline):
+	model = Address
+
+class VenueAdmin(admin.ModelAdmin):
+	inlines = (AddressInline, )
+
 # Register your models here.
-admin.site.register(Venue)
+admin.site.register(Venue, VenueAdmin)
+admin.site.register(Address)
 admin.site.register(Contact)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Description)
-admin.site.register(Equipment)

@@ -5,14 +5,8 @@
 <div class="bs-docs-header" id="content">
   <div class="container">
     <h1>{{ object.name }}</h1>
-    <p>{{ object.address }}</p>
+    <p>{{ object.address.text }}</p>
     <p>Publik: {{ object.audience_min }} - {{ object.audience_max }}
-    <form action="{% url 'delete_venue' pk=object.pk %}" method="post">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary">
-        {% bootstrap_icon "trash" %} Radera lokal
-      </button>
-    </form>
   </div>
 </div>
 
@@ -21,14 +15,14 @@
     {% for image in object.images.all %}
     <div class="col-md-1 col-xs-3">
       <a href="{{ image.image.url }}">
-        <img src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" />
+        <img title="{{ image.caption }}" src="{{ image.thumbnail.url }}" alt="{{ image.caption }}" class="img-responsive img-rounded" />
         <div class="caption">
-          <p class="text-muted small">{{ image.caption }}</p>
+          <p class="text-muted small">{{ image.caption | truncatewords:10 }}</p>
         </div>
       </a>
     </div>
     {% empty %}
-    <p>Inga bilder än!</p>
+    <p class="text-muted">Inga bilder än!</p>
     {% endfor %}
   </div>
   <div class="row">
@@ -37,9 +31,10 @@
         Lägg till bild<span class="caret"></span>
       </a>
       <div id="image-form" class="collapse">
-        <form action="" method="post">
+        <form action="{% url 'create_image' pk=object.pk %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          {% bootstrap_form image_form %}
+          {# bootstrap_form image_form #}
+          {{ image_form }}
           {% buttons %}
           <button type="submit" class="btn btn-primary">
               {% bootstrap_icon "picture" %} Lägg till bild
@@ -77,7 +72,7 @@
           Redigera beskrivning<span class="caret"></span>
         </a>
         <div id="description-form" class="collapse">
-          <form action="" method="post">
+          <form action="{% url 'create_description' pk=object.pk %}" method="post">
             {% csrf_token %}
             {% bootstrap_form description_form %}
             {% buttons %}
@@ -103,8 +98,8 @@
       {% for contact in object.contacts.all %}
       <p>
         <strong>{{ contact.name }}</strong><br/>
-        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>{{ contact.email|default_if_none:"-" }}<br/>
-        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>{{ contact.phone|default_if_none:"-" }}<br/>
+        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <a href="mailto:{{ contact.email }}">{{ contact.email|default_if_none:"-" }}</a><br/>
+        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> {{ contact.phone|default_if_none:"-" }}<br/>
       </p>
       {% empty %}
       <p class="text-muted">Kontaktuppgifter saknas.</p>
@@ -114,7 +109,7 @@
           Lägg till kontaktuppgift<span class="caret"></span>
         </a>
         <div id="contact-form" class="collapse">
-          <form action="" method="post">
+          <form action="{% url 'create_contact' pk=object.pk %}" method="post">
             {% csrf_token %}
             {% bootstrap_form contact_form %}
             {% buttons %}
@@ -126,34 +121,15 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-md-6">
-      <h2>Utrustning</h2>
-      {% for equipment in object.equipment.all %}
-      <h3>{{ equipment.name }}</h3>
-      <p>{{ equipment.desc }}</p>
-      <p class="text-muted">&mdash; {{ equipment.author }}, {{ equipment.timestamp }}</p>
-      {% empty %}
-      <p class="text-muted">Inga inventarier än.</p>
-      {% endfor %}
-      <div>
-        <a class="" data-toggle="collapse" data-target="#equipment-form" aria-expanded="true" aria-controls="demo">
-          Lägg till utrustning<span class="caret"></span>
-        </a>
-        <div id="equipment-form" class="collapse">
-          <form action="" method="post">
-            {% csrf_token %}
-            {% bootstrap_form equipment_form %}
-            {% buttons %}
-            <button type="submit" class="btn btn-primary">
-                {% bootstrap_icon "star" %} Lägg till utrustning
-            </button>
-            {% endbuttons %}
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-
+      <form action="{% url 'delete_venue' pk=object.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+          {% bootstrap_icon "trash" %} Radera lokal
+        </button>
+      </form>
     </div>
   </div>
 </div>

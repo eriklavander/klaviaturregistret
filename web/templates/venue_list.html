@@ -11,16 +11,20 @@
 <div class="container bs-docs-container">
   {% for venue in object_list %}
   <div class="media row">
+    {% if venue.images.all %}
     <a class="media-left" href="{% url 'venue_detail' venue.id %}">
       <img src="{{ venue.images.all.0.thumbnail.url }}" alt="{{ venue.images.all.0.images.caption }}">
     </a>
+    {% endif %}
     <div class="media-body">
       <h4 class="media-heading"><a href="{% url 'venue_detail' venue.id %}">{{ venue.name }}</a></h4>
       <div class="col-md-6">
+        {% if venue.descriptions.all %}
         <p class="small">{{ venue.descriptions.all.0.text | truncatewords:40 }}</p>
         <p class="text-muted small">&mdash; {{ venue.descriptions.all.0.author }}, {{ venue.descriptions.all.0.timestamp }}</p>
+        {% endif %}
       </div>
-      <p class="small">Adress: {{ venue.address }}</p>
+      <p class="small">Adress: {{ venue.address.text }}</p>
       <p class="small">Publik: {{ venue.audience_min }} &mdash; {{ venue.audience_max }}</p>
     </div>
   </div>
@@ -30,7 +34,7 @@
       Lägg till lokal <span class="caret"></span>
     </a>
     <div id="create-venue-form" class="collapse">
-      <form action="" method="post">
+      <form action="{% url 'create_venue' %}" method="post">
         {% csrf_token %}
         {% bootstrap_form create_venue_form %}
         {% buttons %}

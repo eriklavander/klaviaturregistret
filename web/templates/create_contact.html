@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block "title"%}Lägg till kontaktuppgifter - Klaviaturregistret{% endblock %}
+{% block "content" %}
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h2>Lägg till kontaktuppgifter</h2>
+  </div>
+</div>
+<div class="container bs-docs-container">
+  <form action="{% url 'create_description' pk=1 %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Lägg till kontaktuppgift
+    </button>
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}

@@ -23,7 +23,7 @@ class Venue(models.Model):
 
 class Description(models.Model):
     author = models.ForeignKey(User, verbose_name="Användare")
-    text = models.TextField(max_length=512, verbose_name="Beskrivning")
+    text = models.TextField(max_length=8192, verbose_name="Beskrivning")
     timestamp = models.DateTimeField(auto_now_add=True)
     venue = models.ForeignKey(Venue, related_name="descriptions")
 

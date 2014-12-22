@@ -41,6 +41,7 @@ class AdvancedSearchView(TemplateView):
     terms = self.request.GET.get('q', None)
     audience = self.request.GET.get('audience', None)
     if terms or audience:
+      context['has_query'] = True
       hits = Venue.objects.all()
       if terms:
         for term in terms.split('+'):
@@ -52,7 +53,7 @@ class AdvancedSearchView(TemplateView):
           )
       if audience:
         hits = hits.filter(audience_max__gte=audience, audience_min__lte=audience)
-      context['hits'] = hits
+      context['hits'] = hits.distinct()
     else:
       context['hits'] = []
     return context

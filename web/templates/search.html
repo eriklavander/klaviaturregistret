@@ -12,7 +12,7 @@
       {{ searchform }}
       <input type="submit" value="Sök" />
     </form>
-    {% if hits %}
+    {% if has_query %}
     <p class="text-muted">{{ hits.count }} träff{{ hits.count|pluralize:"ar" }}.</p>
     {% endif %}
     {% for venue in hits %}

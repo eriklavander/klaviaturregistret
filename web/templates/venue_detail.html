@@ -63,7 +63,7 @@
         </a>
         <div id="old_descriptions" class="collapse">
           {% for description in object.descriptions.all|slice:"1:" %}
-          <p>{{ description.text }}</p>
+          <p>{{ description.text | linebreaks }}</p>
           <p class="text-muted">&mdash; {{ description.author }}, {{ description.timestamp }}</p>
           {% endfor %}
         </div>

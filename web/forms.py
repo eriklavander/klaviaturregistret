@@ -9,7 +9,7 @@ class AdvancedSearchForm(forms.Form):
 class VenueForm(forms.Form):
   name = forms.CharField(label='Namn')
   address = forms.CharField(label='Adress')
-  description = forms.CharField(label='Beskrivning', help_text='Scen, loger, ljusutrustning, instrument etc.')
+  description = forms.CharField(widget=forms.Textarea, label='Beskrivning', help_text='Scen, loger, ljusutrustning, instrument etc.')
   audience_min = forms.IntegerField(label='Minsta publik')
   audience_max = forms.IntegerField(label='Max publik')
 

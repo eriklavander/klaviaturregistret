@@ -20,7 +20,7 @@
       <h4 class="media-heading"><a href="{% url 'venue_detail' venue.id %}">{{ venue.name }}</a></h4>
       <div class="col-md-6">
         {% if venue.descriptions.all %}
-        <p class="small">{{ venue.descriptions.all.0.text | truncatewords:40 }}</p>
+        <p class="small">{{ venue.descriptions.all.0.text | linebreaks | truncatewords:40 }}</p>
         <p class="text-muted small">&mdash; {{ venue.descriptions.all.0.author }}, {{ venue.descriptions.all.0.timestamp }}</p>
         {% endif %}
       </div>

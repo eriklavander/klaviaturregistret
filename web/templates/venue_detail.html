@@ -25,6 +25,7 @@
     <p class="text-muted">Inga bilder än!</p>
     {% endfor %}
   </div>
+  {% if user.is_authenticated %}
   <div class="row">
     <div class="col-md-6">
       <a data-toggle="collapse" data-target="#image-form" aria-expanded="true" aria-controls="demo">
@@ -44,6 +45,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   <div class="row">
     <div class="col-md-6">
       <h2>Beskrivning</h2>
@@ -67,6 +69,7 @@
         </div>
       </div>
       {% endif %}
+      {% if user.is_authenticated %}
       <div>
         <a class="" data-toggle="collapse" data-target="#description-form" aria-expanded="true" aria-controls="demo">
           Redigera beskrivning<span class="caret"></span>
@@ -83,6 +86,7 @@
           </form>
         </div>
       </div>
+      {% endif %}
     </div>
 
     <div class="col-md-4 pull-right" role="map">
@@ -104,6 +108,7 @@
       {% empty %}
       <p class="text-muted">Kontaktuppgifter saknas.</p>
       {% endfor %}
+      {% if user.is_authenticated %}
       <div>
         <a class="" data-toggle="collapse" data-target="#contact-form" aria-expanded="true" aria-controls="demo">
           Lägg till kontaktuppgift<span class="caret"></span>
@@ -120,8 +125,10 @@
           </form>
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
+  {% if user.is_authenticated %}
   <div class="row">
     <div class="col-md-6">
       <form action="{% url 'delete_venue' pk=object.pk %}" method="post">
@@ -132,5 +139,6 @@
       </form>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %}

@@ -18,13 +18,13 @@
     {% for venue in hits %}
     <div class="media row">
       <a class="media-left" href="{% url 'venue_detail' venue.id %}">
-        <img src="{{ venue.image_set.all.0.thumbnail.url }}" alt="{{ venue.image_set.all.0.images.caption }}">
+        <img src="{{ venue.images.all.0.thumbnail.url }}" alt="{{ venue.images.all.0.images.caption }}">
       </a>
       <div class="media-body">
         <h4 class="media-heading"><a href="{% url 'venue_detail' venue.id %}">{{ venue.name }}</a></h4>
         <div class="col-md-6">
-          <p class="small">{{ venue.description_set.all.0.text | truncatewords:40 }}</p>
-          <p class="text-muted small">&mdash; {{ venue.description_set.all.0.author }}, {{ venue.description_set.all.0.timestamp }}</p>
+          <p class="small">{{ venue.descriptions.all.0.text | truncatewords:40 }}</p>
+          <p class="text-muted small">&mdash; {{ venue.descriptions.all.0.author }}, {{ venue.descriptions.all.0.timestamp }}</p>
         </div>
         <p class="small">Adress: {{ venue.address }}</p>
         <p class="small">Publik: {{ venue.audience_min }} &mdash; {{ venue.audience_max }}</p>

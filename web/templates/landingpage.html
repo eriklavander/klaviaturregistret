@@ -1,10 +1,13 @@
 {% extends "base.html" %}
-{% block "title"%}Sök - Klaviaturregistret{% endblock %}
+{% block "title"%}Klaviaturregistret{% endblock %}
 {% block "content" %}
-<div class="container landing-bg">
-  <div class="landing-form">
-    <a href="{% url "social:begin" "facebook" %}" class="btn btn-lg btn-primary btn-block">Login using Facebook</a>
-    <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-lg btn-primary btn-block">Login using Google</a>
+<div>
+  <div class="container landing-bg">
+    <div class="landing-form">
+      <a href="{% url "social:begin" "facebook" %}" class="btn btn-lg btn-primary btn-block">Logga in med Facebook</a>
+      <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-lg btn-primary btn-block">Logga in med Google</a>
+    </div>
   </div>
+  <p>Bild av Gianpero Addis (<a href="https://www.flickr.com/photos/punkjazz/">Flickr</a>), CC-BY 2.0</p>
 </div>
 {% endblock %}

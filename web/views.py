@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.views.generic import TemplateView, DetailView, ListView, FormView
 from django.views.generic.edit  import CreateView, DeleteView
 from django.forms import ModelForm
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -59,8 +59,9 @@ class AdvancedSearchView(TemplateView):
     return context
 
 class VenueList(ListView):
-  model = Venue
+  queryset = Venue.objects.annotate(latest_update=Max('descriptions__timestamp')).order_by('-latest_update')
   template_name = 'venue_list.html'
+  paginate_by = 10
 
   def get_context_data(self, **kwargs):
     context = super(VenueList, self).get_context_data(**kwargs)

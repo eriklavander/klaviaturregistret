@@ -47,5 +47,20 @@
     </div>
   </div>
   {% endif %}
+  {% if is_paginated %}
+  <div class="pagination">
+    <span class="page-links">
+      {% if page_obj.has_previous %}
+      <a href="{% url 'venue_list' %}?page={{ page_obj.previous_page_number }}">föregående</a>
+      {% endif %}
+      <span class="page-current">
+          Sida {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}.
+      </span>
+      {% if page_obj.has_next %}
+      <a href="{% url 'venue_list' %}?page={{ page_obj.next_page_number }}">nästa</a>
+      {% endif %}
+    </span>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
